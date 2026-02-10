@@ -18,8 +18,5 @@
     <ClCompile Include="array basics.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="userinput.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
 </Project>

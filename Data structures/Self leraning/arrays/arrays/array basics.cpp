@@ -1,16 +1,23 @@
-
 #include <iostream>
+
 using namespace std;
 
 int main()
 {
-    int a[5] = { 10, 20, 70, 40, 30 };
+	int A[6];
 
-    for (int i = 0; i < 5; i++)
-    {
-        cout << "Element: " << a[i] << endl;
-    }
+	cout << "Enter 6 numbers:" << endl;
 
-    return 0;
+	for (int i = 0; i < 5; i++)
+	{
+		cin >> A[i];
+
+	}
+
+	cout << "\nYou entered:\n";
+
+	for (int i = 0; i < 5; i++) { cout << A[i] << " "; }
+
+	return 0;
+
 }
-
