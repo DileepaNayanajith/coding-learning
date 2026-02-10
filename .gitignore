@@ -1,0 +1,27 @@
+# Ignore all Visual Studio temporary files
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Ignore build folders
+Debug/
+Release/
+x64/
+x86/
+
+# Ignore compiled files
+*.obj
+*.exe
+*.pdb
+*.ilk
+*.log
+*.tlog
+*.idb
+*.ipch
+*.iobj
+
+# Optional: ignore HTML/CSS temp
+*.css.map
+*.tmp
