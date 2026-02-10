@@ -1,0 +1,70 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\ACADAMIC\\CSS\\HTML CSS\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{4F95DA8C-415B-41E3-B3B9-F810C68B908E}|HTML CSS\\HTML CSS.vcxproj|D:\\ACADAMIC\\CSS\\HTML CSS\\HTML CSS\\HTMLPage.htm||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{4F95DA8C-415B-41E3-B3B9-F810C68B908E}|HTML CSS\\HTML CSS.vcxproj|solutionrelative:HTML CSS\\HTMLPage.htm||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4F95DA8C-415B-41E3-B3B9-F810C68B908E}|HTML CSS\\HTML CSS.vcxproj|D:\\ACADAMIC\\CSS\\HTML CSS\\HTML CSS\\localstyles.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{4F95DA8C-415B-41E3-B3B9-F810C68B908E}|HTML CSS\\HTML CSS.vcxproj|solutionrelative:HTML CSS\\localstyles.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4F95DA8C-415B-41E3-B3B9-F810C68B908E}|HTML CSS\\HTML CSS.vcxproj|D:\\ACADAMIC\\CSS\\HTML CSS\\HTML CSS\\globlestyles.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{4F95DA8C-415B-41E3-B3B9-F810C68B908E}|HTML CSS\\HTML CSS.vcxproj|solutionrelative:HTML CSS\\globlestyles.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "HTMLPage.htm",
+              "DocumentMoniker": "D:\\ACADAMIC\\CSS\\HTML CSS\\HTML CSS\\HTMLPage.htm",
+              "RelativeDocumentMoniker": "HTML CSS\\HTMLPage.htm",
+              "ToolTip": "D:\\ACADAMIC\\CSS\\HTML CSS\\HTML CSS\\HTMLPage.htm",
+              "RelativeToolTip": "HTML CSS\\HTMLPage.htm",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2026-02-03T09:20:05.225Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "localstyles.css",
+              "DocumentMoniker": "D:\\ACADAMIC\\CSS\\HTML CSS\\HTML CSS\\localstyles.css",
+              "RelativeDocumentMoniker": "HTML CSS\\localstyles.css",
+              "ToolTip": "D:\\ACADAMIC\\CSS\\HTML CSS\\HTML CSS\\localstyles.css",
+              "RelativeToolTip": "HTML CSS\\localstyles.css",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2026-02-03T09:42:08.034Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "globlestyles.css",
+              "DocumentMoniker": "D:\\ACADAMIC\\CSS\\HTML CSS\\HTML CSS\\globlestyles.css",
+              "RelativeDocumentMoniker": "HTML CSS\\globlestyles.css",
+              "ToolTip": "D:\\ACADAMIC\\CSS\\HTML CSS\\HTML CSS\\globlestyles.css",
+              "RelativeToolTip": "HTML CSS\\globlestyles.css",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2026-02-03T09:33:47.732Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

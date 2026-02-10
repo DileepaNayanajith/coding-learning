@@ -1,0 +1,49 @@
+
+    p{
+         color:red;
+         font-size:10px;
+         font-weight:bold;
+
+
+     }
+ul {
+    display: inline-block;
+    text-align: center; 
+}
+body {
+    counter-reset: main-topic; 
+}
+*{
+    text-align:center;
+}
+.main-topic {
+    counter-increment: main-topic; 
+    
+    font-size: 20px;
+    font-weight: bold;
+    counter-reset: sub-topic; 
+}
+
+    .main-topic::before {
+        content: counter(main-topic) ". ";
+        color: darkblue;
+    }
+
+.sub-topic {
+    counter-increment: sub-topic; 
+    margin-left: 20px;
+}
+
+    .sub-topic::before {
+        content: counter(main-topic) "." counter(sub-topic) " ";
+        color: darkgreen;
+    }
+
+   #p3{
+        color:blue;
+        font-size:16px;
+    }
+    #p4 {
+    color: aqua;
+    font-size: 17px;
+    }
