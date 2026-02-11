@@ -5,27 +5,13 @@ using namespace std;
 int main ()
 {
 	int X;
-	string pass;
-	cout <<  "What is your marks:";
+	cout << "Enter a NUM:";
 	cin >> X;
-	
-	if (X > 75)
-	{
-		pass = "A";
+
+	while (X!=0) {
+
+		cout << X << endl;
+		X--;
 	}
-	else if (X > 65)
-	{
-		pass = "B";
-	}
-	else if (X > 55)
-	{
-		pass = "C";
-	}
-	else 
-	{
-		pass = "FAIL";
-	}
-	cout << "Your result is :" << pass << endl;
-	
-	return 0;
+	return 0 ;
 }
