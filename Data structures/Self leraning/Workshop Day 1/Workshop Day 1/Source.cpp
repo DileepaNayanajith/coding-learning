@@ -4,5 +4,10 @@ using namespace std;
 
 int main ()
 {
-	cout << "Hello world" << endl;
+	string Name;
+	cout << "What is your name: " << endl;
+	cin >> Name;
+
+	cout << "Your Name is " << Name << endl;
+	return 0;
 }
