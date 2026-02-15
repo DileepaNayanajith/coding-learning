@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Payment & Customer Details</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            padding: 20px;
+            max-width: 700px;
+            margin: auto;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0 15px 0;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            padding: 12px 25px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        #preview {
+            max-width: 250px;
+            display: none;
+            margin-top: 10px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.3);
+        }
+
+        #total {
+            font-size: 20px;
+            font-weight: bold;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>Payment & Delivery Details</h2>
+
+    <!-- PAYMENT TYPE -->
+    <label>Payment Type</label>
+    <select id="paymentType">
+        <option value="">Select Payment Type</option>
+        <option>Advance Payment</option>
+        <option>Full Payment</option>
+    </select>
+
+    <!-- SLIP UPLOAD -->
+    <label>Upload Payment Slip</label>
+    <input type="file" id="slipInput" accept="image/*,application/pdf">
+
+    <img id="preview">
+
+    <hr>
+
+    <!-- CUSTOMER DETAILS -->
+    <h3>Customer Information</h3>
+
+    <input type="text" id="name" placeholder="Full Name">
+
+    <input type="text" id="contact" placeholder="Contact Number / WhatsApp">
+
+<textarea id="street" placeholder="Street Address"></textarea>
+
+    <input type="text" id="city" placeholder="City">
+
+    <input type="text" id="province" placeholder="Province">
+
+<textarea id="note" placeholder="Optional Note / Gift Message"></textarea>
+
+    <div id="total">Total: LKR 0</div>
+
+    <button onclick="nextStep()">Review Order</button>
+
+    <script>
+
+// ---------- PRICE CALCULATION ----------
+let size = localStorage.getItem("lithoSize");
+let qty  = parseInt(localStorage.getItem("lithoQty")) || 1;
+let typePrice = parseInt(localStorage.getItem("productTypePrice")) || 0;
+
+let basePrice=0;
+
+if(size=="Small") basePrice=1500;
+if(size=="Medium") basePrice=2500;
+if(size=="Large") basePrice=4000;
+
+// Addons
+let addons = JSON.parse(localStorage.getItem("addons") || "[]");
+let addonTotal = 0;
+
+// Simple addon pricing map
+addons.forEach(a=>{
+    if(a.includes("Gift")) addonTotal+=500;
+    if(a.includes("Engraving")) addonTotal+=300;
+    if(a.includes("RGB")) addonTotal+=800;
+});
+
+let total=(basePrice+typePrice+addonTotal)*qty;
+
+document.getElementById("total")
+.innerText="Total: LKR "+total;
+
+
+// ---------- SLIP PREVIEW ----------
+document.getElementById("slipInput")
+.addEventListener("change",function(e){
+
+    let file=e.target.files[0];
+    if(!file) return;
+
+    if(file.type.startsWith("image")){
+        let reader=new FileReader();
+        reader.onload=function(ev){
+            let img=document.getElementById("preview");
+            img.src=ev.target.result;
+            img.style.display="block";
+        }
+        reader.readAsDataURL(file);
+    }
+});
+
+
+// ---------- NEXT ----------
+function nextStep(){
+
+    let payType=document.getElementById("paymentType").value;
+    let slip=document.getElementById("slipInput").files[0];
+    let name=document.getElementById("name").value.trim();
+    let contact=document.getElementById("contact").value.trim();
+    let street=document.getElementById("street").value.trim();
+    let city=document.getElementById("city").value.trim();
+    let province=document.getElementById("province").value.trim();
+
+    if(!payType){
+        alert("Select payment type");
+        return;
+    }
+
+    if(!slip){
+        alert("Upload payment slip");
+        return;
+    }
+
+    if(!name || !contact || !street || !city || !province){
+        alert("Fill all customer details");
+        return;
+    }
+
+    // Save details
+    localStorage.setItem("paymentType",payType);
+    localStorage.setItem("customerName",name);
+    localStorage.setItem("customerContact",contact);
+    localStorage.setItem("customerStreet",street);
+    localStorage.setItem("customerCity",city);
+    localStorage.setItem("customerProvince",province);
+    localStorage.setItem("customerNote",
+        document.getElementById("note").value);
+
+    // Save slip
+    let reader=new FileReader();
+    reader.onload=function(e){
+        localStorage.setItem("paymentSlip",e.target.result);
+
+        window.location.href="review.html";
+    }
+    reader.readAsDataURL(slip);
+}
+
+    </script>
+
+</body>
+</html>

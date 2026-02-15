@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload Photo</title>
+
+    <link rel="stylesheet" href="styleSheet.css">
+
+    <style>
+        #previewBox {
+            margin-top: 20px;
+        }
+
+        #preview {
+            max-width: 300px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+            display: none;
+        }
+
+        #removeBtn {
+            display: none;
+            margin-top: 10px;
+            padding: 8px 15px;
+            background: red;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>Upload Your Photo</h2>
+
+
+
+    <input type="file" id="imageInput" accept="image/*">
+
+    <div id="previewBox">
+        <img id="preview">
+        <br>
+        <button id="removeBtn" onclick="removeImage()">Remove Photo</button>
+    </div>
+
+    <br>
+
+    <button onclick="nextStep()">NEXT</button>
+    <h6 id="selectedInfo">crop as your own in next step</h6>
+
+    <script>
+
+        let uploadedImage = null;
+
+        document.getElementById("imageInput")
+            .addEventListener("change", function (event) {
+
+                let file = event.target.files[0];
+                if (!file) return;
+
+                uploadedImage = file;
+
+                let reader = new FileReader();
+
+                reader.onload = function (e) {
+                    let img = document.getElementById("preview");
+                    img.src = e.target.result;
+                    img.style.display = "block";
+
+                    document.getElementById("removeBtn")
+                        .style.display = "inline-block";
+                }
+
+                reader.readAsDataURL(file);
+            });
+
+
+        function removeImage() {
+
+            uploadedImage = null;
+
+            document.getElementById("preview").src = "";
+            document.getElementById("preview").style.display = "none";
+
+            document.getElementById("imageInput").value = "";
+
+            document.getElementById("removeBtn").style.display = "none";
+        }
+
+
+        function nextStep() {
+
+            if (!uploadedImage) {
+                alert("Please upload photo");
+                return;
+            }
+
+            let reader = new FileReader();
+            reader.onload = function (e) {
+                // Save uploaded image in localStorage
+                localStorage.setItem("uploadedImage", e.target.result);
+
+                // Navigate to crop page
+                window.location.href = "crop.htm";
+            }
+            reader.readAsDataURL(uploadedImage);
+        }
+
+
+    </script>
+
+</body>
+</html>

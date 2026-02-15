@@ -26,7 +26,23 @@ body {
     opacity: 0.5;
     cursor: not-allowed;
 }
+.tooltip {
+    visibility: hidden;
+    background: black;
+    color: white;
+    text-align: center;
+    padding: 5px 10px;
+    border-radius: 6px;
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 12px;
+}
 
+.disabled:hover .tooltip {
+    visibility: visible;
+}
 button {
     padding: 12px 25px;
     font-size: 16px;

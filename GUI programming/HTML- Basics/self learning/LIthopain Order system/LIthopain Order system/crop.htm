@@ -1,0 +1,118 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Crop Photo</title>
+
+    <!-- Cropper.js CSS -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.css" />
+
+    <!-- Cropper.js JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.js"></script>
+
+    <style>
+        body {
+            font-family: Arial;
+            text-align: center;
+            padding: 20px;
+        }
+        #cropContainer {
+            width: 400px; /* small fixed width */
+            height: 400px; /* fixed height */
+            margin: 0 auto;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+            background: #f9f9f9;
+        }
+
+        #image {
+            max-width: 100%;
+            display: block;
+            margin: 0 auto;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        }
+
+        button {
+            padding: 10px 25px;
+            margin-top: 20px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>Crop Your Photo</h2>
+    <div id="cropContainer"><img id="image"></div>
+    
+
+    <br>
+
+    <button onclick="cropImage()">Confirm Crop</button>
+
+    <script>
+        let cropper;
+        let ratio = 1;
+
+        // Get selected size from Step 1
+        let size = localStorage.getItem("lithoSize");
+        if (!size) {
+            alert("No size selected! Go back and select size.");
+            window.location.href = "order.html";
+        }
+
+        // Determine aspect ratio
+        if (size === "Small") ratio = 7.5 / 8.5;
+        else if (size === "Medium") ratio = 1;
+        else if (size === "Large") ratio = 1;
+
+        // Get uploaded image from Step 2
+        let uploadedImage = localStorage.getItem("uploadedImage");
+        if (!uploadedImage) {
+            alert("No uploaded image found! Go back and upload.");
+            window.location.href = "upload.html";
+        }
+
+        let img = document.getElementById("image");
+        img.src = uploadedImage;
+
+        img.onload = function () {
+            // Initialize Cropper
+            cropper = new Cropper(img, {
+                aspectRatio: ratio,
+                viewMode: 1
+            });
+        }
+
+        function cropImage() {
+            if (!cropper) {
+                alert("Image not loaded");
+                return;
+            }
+
+            // Get cropped image
+            let canvas = cropper.getCroppedCanvas();
+
+            if (!canvas) {
+                alert("Crop failed!");
+                return;
+            }
+
+            let croppedData = canvas.toDataURL("image/png");
+
+            // Save cropped image in localStorage
+            localStorage.setItem("croppedImage", croppedData);
+
+          
+
+            // Optional: move to next page (product type)
+            window.location.href = "option.htm";
+        }
+    </script>
+
+</body>
+</html>

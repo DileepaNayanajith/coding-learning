@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Choose Options</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            padding: 20px;
+            max-width: 700px;
+            margin: auto;
+            text-align: center;
+        }
+
+        .option {
+            border: 2px solid #ccc;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .selected {
+            border-color: #007bff;
+            background: #e6f0ff;
+        }
+
+        #previewBox {
+            margin-top: 20px;
+        }
+
+        #previewImg {
+            max-width: 300px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.3);
+        }
+
+        #total {
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 12px 25px;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>Select Product Type</h2>
+
+    <!-- OPTIONS -->
+    <div class="option" onclick="selectType('Only Litho',0,'images/litho.jpeg',this)">
+        Only Lithophane
+    </div>
+
+    <div class="option" onclick="selectType('With Light Box',1500,'images/lightbox.jpeg',this)">
+        With Light Box (+1500 LKR)
+    </div>
+
+    <div class="option" onclick="selectType('Rechargeable Battery Box',2500,'images/rechargeable.jpeg',this)">
+        Rechargeable Battery Box (+2500 LKR)
+    </div>
+
+    <!-- IMAGE PREVIEW -->
+    <div id="previewBox">
+        <img id="previewImg" src="images\litho.jpeg">
+    </div>
+
+    <hr>
+
+   
+    <div id="total">Total: LKR 450</div>
+
+    <button onclick="nextStep()">NEXT</button>
+
+    <script>
+
+        // ---------- BASE ----------
+        let size = localStorage.getItem("lithoSize");
+        let qty = parseInt(localStorage.getItem("lithoQty")) || 1;
+
+        let basePrice = 0;
+
+        if (size == "Small") basePrice = 1500;
+        if (size == "Medium") basePrice = 2500;
+        if (size == "Large") basePrice = 4000;
+
+        // ---------- TYPE ----------
+        let typeName = "";
+        let typePrice = 0;
+
+        function selectType(name, price, img, el) {
+
+            typeName = name;
+            typePrice = price;
+
+            // Highlight
+            document.querySelectorAll(".option")
+                .forEach(o => o.classList.remove("selected"));
+
+            el.classList.add("selected");
+
+            // Change preview image
+            document.getElementById("previewImg").src = img;
+
+            updateTotal();
+        }
+
+        // ---------- TOTAL ----------
+        function updateTotal() {
+
+            let addonTotal = 0;
+
+            document.querySelectorAll("input[type=checkbox]:checked")
+                .forEach(c => {
+                    addonTotal += parseInt(c.value);
+                });
+
+            let total = (basePrice + typePrice + addonTotal) * qty;
+
+            document.getElementById("total")
+                .innerText = "Total: LKR " + total;
+        }
+
+        updateTotal();
+
+        // ---------- NEXT ----------
+        function nextStep() {
+
+            if (typeName == "") {
+                alert("Please select product type");
+                return;
+            }
+
+            localStorage.setItem("productType", typeName);
+            localStorage.setItem("productTypePrice", typePrice);
+
+            window.location.href = "payment.htm";
+        }
+
+    </script>
+
+</body>
+</html>
