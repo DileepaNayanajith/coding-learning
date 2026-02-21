@@ -1,0 +1,154 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Thank You for Your Order</title>
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg,#f5f7fa,#c3cfe2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+            overflow: hidden;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            max-width: 600px;
+            width: 100%;
+            position: relative;
+            animation: fadeIn 1.2s ease-out;
+        }
+
+        h1 {
+            font-size: 32px;
+            color: #333;
+            margin-bottom: 15px;
+            animation: slideDown 1s ease forwards;
+        }
+
+        #orderId {
+            font-size: 22px;
+            font-weight: bold;
+            color: #007bff;
+            margin-bottom: 25px;
+            animation: pulse 1.5s infinite;
+        }
+
+        p {
+            font-size: 18px;
+            color: #555;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+
+        .delivery-icon {
+            width: 100px;
+            height: 100px;
+            margin: 20px auto;
+            background: url('https://cdn-icons-png.flaticon.com/512/893/893257.png') no-repeat center/contain;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        button {
+            padding: 12px 30px;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            background: #007bff;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+            button:hover {
+                background: #0056b3;
+                transform: scale(1.05);
+            }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0
+            }
+
+            to {
+                opacity: 1
+            }
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%,100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        @keyframes float {
+            0%,100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-15px);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>🎉 Thank You for Your Order!</h1>
+        <div id="orderId">Order ID: LITHO-XXXXXX</div>
+
+        <p>
+            Your custom lithophane order has been successfully placed.<br>
+            Delivery will take <strong>2–3 business days</strong> to reach your doorstep.
+        </p>
+
+        <div class="delivery-icon"></div>
+
+        <button onclick="goHome()">Back to Home</button>
+    </div>
+
+    <script>
+    // Get order ID from localStorage (set in review page)
+    const orderId = localStorage.getItem("orderId") || "LITHO-XXXXXX";
+    document.getElementById("orderId").innerText = "Order ID: " + orderId;
+
+    function goHome(){
+        window.location.href = "order.htm"; // replace with your home page
+    }
+    </script>
+
+</body>
+</html>

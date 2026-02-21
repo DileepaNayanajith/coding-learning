@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <title>Payment & Customer Details</title>
@@ -42,6 +42,10 @@
             font-weight: bold;
             margin: 15px 0;
         }
+
+        .codOption {
+            opacity: 0.5;
+        }
     </style>
 </head>
 
@@ -51,13 +55,36 @@
 
     <!-- PAYMENT TYPE -->
     <label>Payment Type</label>
-    <select id="paymentType">
+
+    <select id="paymentType" onchange="handlePaymentType()">
+
         <option value="">Select Payment Type</option>
-        <option>Advance Payment</option>
-        <option>Full Payment</option>
+
+        <option value="Advance">
+            Advance Payment (50% from Total)
+        </option>
+
+        <option value="Full" selected>
+            Full Payment (RECOMMENDED)
+        </option>
+
+
     </select>
 
-    <!-- SLIP UPLOAD -->
+    <!-- Advance Note -->
+    <p id="advanceNote"
+       style="display:none;color:#e67e00;font-size:14px;">
+        ⚠ Balance payment must be paid at doorstep (Courier COD).
+    </p>
+
+    <!-- COD Warning -->
+    <p id="codWarning"
+       style="display:none;color:red;font-size:14px;">
+        ⚠ Custom lithophanes are made on order.
+        COD may delay or cancel your order.
+    </p>
+
+    <!-- SLIP -->
     <label>Upload Payment Slip</label>
     <input type="file" id="slipInput" accept="image/*,application/pdf">
 
@@ -65,19 +92,14 @@
 
     <hr>
 
-    <!-- CUSTOMER DETAILS -->
     <h3>Customer Information</h3>
 
     <input type="text" id="name" placeholder="Full Name">
-
     <input type="text" id="contact" placeholder="Contact Number / WhatsApp">
-
+    <input type="email" id="email" placeholder="Email Address">
 <textarea id="street" placeholder="Street Address"></textarea>
-
     <input type="text" id="city" placeholder="City">
-
     <input type="text" id="province" placeholder="Province">
-
 <textarea id="note" placeholder="Optional Note / Gift Message"></textarea>
 
     <div id="total">Total: LKR 0</div>
@@ -86,98 +108,131 @@
 
     <script>
 
-// ---------- PRICE CALCULATION ----------
-let size = localStorage.getItem("lithoSize");
-let qty  = parseInt(localStorage.getItem("lithoQty")) || 1;
-let typePrice = parseInt(localStorage.getItem("productTypePrice")) || 0;
+        // ---------- PAYMENT NOTE ----------
+        function handlePaymentType() {
 
-let basePrice=0;
+            let type = document.getElementById("paymentType").value;
 
-if(size=="Small") basePrice=1500;
-if(size=="Medium") basePrice=2500;
-if(size=="Large") basePrice=4000;
+            document.getElementById("advanceNote").style.display = "none";
+            document.getElementById("codWarning").style.display = "none";
 
-// Addons
-let addons = JSON.parse(localStorage.getItem("addons") || "[]");
-let addonTotal = 0;
+            if (type === "Advance") {
+                document.getElementById("advanceNote").style.display = "block";
+            }
 
-// Simple addon pricing map
-addons.forEach(a=>{
-    if(a.includes("Gift")) addonTotal+=500;
-    if(a.includes("Engraving")) addonTotal+=300;
-    if(a.includes("RGB")) addonTotal+=800;
-});
-
-let total=(basePrice+typePrice+addonTotal)*qty;
-
-document.getElementById("total")
-.innerText="Total: LKR "+total;
-
-
-// ---------- SLIP PREVIEW ----------
-document.getElementById("slipInput")
-.addEventListener("change",function(e){
-
-    let file=e.target.files[0];
-    if(!file) return;
-
-    if(file.type.startsWith("image")){
-        let reader=new FileReader();
-        reader.onload=function(ev){
-            let img=document.getElementById("preview");
-            img.src=ev.target.result;
-            img.style.display="block";
+            if (type === "COD") {
+                document.getElementById("codWarning").style.display = "block";
+            }
         }
-        reader.readAsDataURL(file);
-    }
-});
 
 
-// ---------- NEXT ----------
-function nextStep(){
+        // ---------- PRICE ----------
+        let size = localStorage.getItem("lithoSize");
+        let qty = parseInt(localStorage.getItem("lithoQty")) || 1;
+        let typePrice = parseInt(localStorage.getItem("productTypePrice")) || 0;
 
-    let payType=document.getElementById("paymentType").value;
-    let slip=document.getElementById("slipInput").files[0];
-    let name=document.getElementById("name").value.trim();
-    let contact=document.getElementById("contact").value.trim();
-    let street=document.getElementById("street").value.trim();
-    let city=document.getElementById("city").value.trim();
-    let province=document.getElementById("province").value.trim();
+        let basePrice = 0;
 
-    if(!payType){
-        alert("Select payment type");
-        return;
-    }
+        if (size == "Small") basePrice = 1500;
+        if (size == "Medium") basePrice = 2500;
+        if (size == "Large") basePrice = 4000;
 
-    if(!slip){
-        alert("Upload payment slip");
-        return;
-    }
+        let addons = JSON.parse(localStorage.getItem("addons") || "[]");
+        let addonTotal = 0;
 
-    if(!name || !contact || !street || !city || !province){
-        alert("Fill all customer details");
-        return;
-    }
+        addons.forEach(a => {
+            if (a.includes("Gift")) addonTotal += 500;
+            if (a.includes("Engraving")) addonTotal += 300;
+            if (a.includes("RGB")) addonTotal += 800;
+        });
 
-    // Save details
-    localStorage.setItem("paymentType",payType);
-    localStorage.setItem("customerName",name);
-    localStorage.setItem("customerContact",contact);
-    localStorage.setItem("customerStreet",street);
-    localStorage.setItem("customerCity",city);
-    localStorage.setItem("customerProvince",province);
-    localStorage.setItem("customerNote",
-        document.getElementById("note").value);
+        let total = (basePrice + typePrice + addonTotal) * qty;
 
-    // Save slip
-    let reader=new FileReader();
-    reader.onload=function(e){
-        localStorage.setItem("paymentSlip",e.target.result);
+        document.getElementById("total")
+            .innerText = "Total: LKR " + total;
 
-        window.location.href="review.html";
-    }
-    reader.readAsDataURL(slip);
-}
+
+        // ---------- SLIP PREVIEW ----------
+        document.getElementById("slipInput")
+            .addEventListener("change", function (e) {
+
+                let file = e.target.files[0];
+                if (!file) return;
+
+                if (file.type.startsWith("image")) {
+                    let reader = new FileReader();
+                    reader.onload = function (ev) {
+                        let img = document.getElementById("preview");
+                        img.src = ev.target.result;
+                        img.style.display = "block";
+                    }
+                    reader.readAsDataURL(file);
+                }
+            });
+
+
+        // ---------- NEXT ----------
+        function nextStep() {
+
+            let payType = document.getElementById("paymentType").value;
+            let slip = document.getElementById("slipInput").files[0];
+
+            let name = document.getElementById("name").value.trim();
+            let contact = document.getElementById("contact").value.trim();
+            let email = document.getElementById("email").value.trim();
+
+            if (!email) {
+                alert("Please enter your email address");
+                return;
+            }
+
+            // Save email
+            localStorage.setItem("customerEmail", email);
+
+            let street = document.getElementById("street").value.trim();
+            let city = document.getElementById("city").value.trim();
+            let province = document.getElementById("province").value.trim();
+
+            if (!payType) {
+                alert("Select payment type");
+                return;
+            }
+
+            // Slip required except COD
+            if (payType !== "COD" && !slip) {
+                alert("Upload payment slip");
+                return;
+            }
+
+            if (!name || !contact || !street || !city || !province) {
+                alert("Fill all customer details");
+                return;
+            }
+
+            // Save
+            localStorage.setItem("paymentType", payType);
+            localStorage.setItem("customerName", name);
+            localStorage.setItem("customerContact", contact);
+            localStorage.setItem("customerStreet", street);
+            localStorage.setItem("customerCity", city);
+            localStorage.setItem("customerProvince", province);
+            localStorage.setItem("customerNote",
+                document.getElementById("note").value);
+
+            // Save slip if exists
+            if (slip) {
+                let reader = new FileReader();
+                reader.onload = function (e) {
+                    localStorage.setItem("paymentSlip", e.target.result);
+                    window.location.href = "review.htm";
+                }
+                reader.readAsDataURL(slip);
+            }
+            else {
+                window.location.href = "review.htm";
+            }
+
+        }
 
     </script>
 

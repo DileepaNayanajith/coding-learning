@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -21,9 +21,10 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{661f5d94-399a-4a72-9b27-b8bb2310b048}</ProjectGuid>
-    <RootNamespace>LIthopainOrdersystem</RootNamespace>
+    <ProjectGuid>{87804f8b-cb0c-43cf-b9cd-0e2e0b74ae6e}</ProjectGuid>
+    <RootNamespace>AVLtrees</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>stack</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -127,28 +128,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <None Include="Final.htm">
-      <DeploymentContent>true</DeploymentContent>
-    </None>
-    <None Include="option.htm">
-      <DeploymentContent>true</DeploymentContent>
-    </None>
-    <None Include="order.htm">
-      <DeploymentContent>true</DeploymentContent>
-    </None>
-    <None Include="crop.htm">
-      <DeploymentContent>true</DeploymentContent>
-    </None>
-    <None Include="payment.htm">
-      <DeploymentContent>true</DeploymentContent>
-    </None>
-    <None Include="review.htm">
-      <DeploymentContent>true</DeploymentContent>
-    </None>
-    <None Include="upload.htm">
-      <DeploymentContent>true</DeploymentContent>
-    </None>
-    <None Include="StyleSheet.css" />
+    <ClCompile Include="Source.cpp" />
+    <ClCompile Include="Source1.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Header.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

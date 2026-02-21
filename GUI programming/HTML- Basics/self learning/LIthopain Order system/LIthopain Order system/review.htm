@@ -1,0 +1,152 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Review Your Lithophane Order</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            max-width: 700px;
+            margin: auto;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        .section {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        img {
+            max-width: 250px;
+            display: block;
+            margin: 10px auto;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.3);
+        }
+
+        .total {
+            font-size: 22px;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 12px 25px;
+            font-size: 16px;
+            cursor: pointer;
+            display: block;
+            margin: 20px auto;
+            border-radius: 6px;
+        }
+
+        #orderId {
+            font-weight: bold;
+            text-align: center;
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Review Your Lithophane Order</h2>
+
+    <div id="orderId">Order ID: LITHO-XXXXXX</div>
+
+    <div class="section">
+        <h3>Selected Size & Quantity</h3>
+        <p id="sizeQty"></p>
+    </div>
+
+    <div class="section">
+        <h3>Product Type & Addons</h3>
+        <p id="typeAddon"></p>
+        <img id="productImg" src="" alt="No image uploaded">
+    </div>
+
+    <div class="section">
+        <h3>Payment</h3>
+        <p id="paymentType"></p>
+        <img id="slipPreview" src="" alt="No payment slip uploaded" style="max-width:200px;">
+    </div>
+
+    <div class="section">
+        <h3>Delivery Details</h3>
+        <p id="customerDetails"></p>
+        <p id="note"></p>
+    </div>
+
+    <div class="total" id="totalPrice"></div>
+
+    <button onclick="submitOrder()">Confirm & Submit Order</button>
+
+    <script>
+        // ---------- GENERATE ORDER ID ----------
+        function generateOrderId() {
+            let timestamp = Date.now().toString();
+            let random = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
+            return "LITHO-" + timestamp.slice(-6) + random;
+        }
+
+        // ---------- GET DATA ----------
+        const size = localStorage.getItem("lithoSize") || "";
+        const qty = parseInt(localStorage.getItem("lithoQty")) || 1;
+        const typeName = localStorage.getItem("productType") || "";
+        const typePrice = parseInt(localStorage.getItem("productTypePrice")) || 0;
+        const addons = JSON.parse(localStorage.getItem("addons") || "[]");
+        const croppedImage = localStorage.getItem("croppedImage");
+        const paymentType = localStorage.getItem("paymentType") || "";
+        const paymentSlip = localStorage.getItem("paymentSlip") || "";
+        const name = localStorage.getItem("customerName") || "";
+        const contact = localStorage.getItem("customerContact") || "";
+        const street = localStorage.getItem("customerStreet") || "";
+        const city = localStorage.getItem("customerCity") || "";
+        const province = localStorage.getItem("customerProvince") || "";
+        const note = localStorage.getItem("customerNote") || "";
+
+        // ---------- DISPLAY ----------
+        document.getElementById("sizeQty").innerText = `${size} - Quantity: ${qty}`;
+        let addonText = addons.length > 0 ? addons.join(", ") : "None";
+        document.getElementById("typeAddon").innerText = `${typeName} | Addons: ${addonText}`;
+        if (croppedImage) document.getElementById("productImg").src = croppedImage;
+
+        document.getElementById("paymentType").innerText = paymentType;
+        if (paymentSlip) document.getElementById("slipPreview").src = paymentSlip;
+
+        document.getElementById("customerDetails").innerHTML = `${name}<br>${contact}<br>${street}, ${city}, ${province}`;
+        document.getElementById("note").innerText = note || "No note provided";
+
+        let basePrice = 0;
+        if (size === "Small") basePrice = 1500;
+        if (size === "Medium") basePrice = 2500;
+        if (size === "Large") basePrice = 4000;
+
+        let addonTotal = 0;
+        addons.forEach(a => {
+            if (a.includes("Gift")) addonTotal += 500;
+            if (a.includes("Engraving")) addonTotal += 300;
+            if (a.includes("RGB")) addonTotal += 800;
+        });
+
+        const total = (basePrice + typePrice + addonTotal) * qty;
+        document.getElementById("totalPrice").innerText = "Total: LKR " + total;
+
+        // ---------- SUBMIT ORDER ----------
+        function submitOrder() {
+            const orderId = generateOrderId();
+            localStorage.setItem("orderId", orderId);
+
+            // Redirect to Thank You page
+            window.location.href = "Final.htm";
+        }
+    </script>
+
+</body>
+</html>
