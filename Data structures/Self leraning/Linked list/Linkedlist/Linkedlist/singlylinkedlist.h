@@ -37,6 +37,9 @@ public:
 		Node* a = 1000;
 		Node* b = 2000;
 		a = b;
+
+
+		Node* a = 1000;
 	}
 };
 
