@@ -1,3 +1,79 @@
-BODY
-{
+body {
+    margin: 0;
+    overflow: hidden;
+    height: 100vh;
+    background: linear-gradient(to top, #87ceeb 70%, #4CAF50 30%);
+    position: relative;
+}
+
+/* SUN */
+.sun {
+    position: absolute;
+    top: 40px;
+    right: 80px;
+    width: 80px;
+    height: 80px;
+    background: yellow;
+    border-radius: 50%;
+    box-shadow: 0 0 40px yellow;
+}
+
+/* CAT */
+.cat {
+    position: absolute;
+    bottom: 80px;
+    left: -120px;
+    font-size: 70px;
+    animation: runCat 6s linear infinite, bounce 0.5s ease-in-out infinite alternate;
+}
+
+/* DOG */
+.dog {
+    position: absolute;
+    bottom: 80px;
+    left: -250px;
+    font-size: 80px;
+    animation: runDog 6s linear infinite, bounce 0.5s ease-in-out infinite alternate;
+}
+
+/* CAT MOVEMENT */
+@keyframes runCat {
+    0% {
+        left: -120px;
+    }
+
+    100% {
+        left: 110%;
+    }
+}
+
+/* DOG MOVEMENT */
+@keyframes runDog {
+    0% {
+        left: -250px;
+    }
+
+    100% {
+        left: 105%;
+    }
+}
+
+/* BOUNCE EFFECT (running feel) */
+@keyframes bounce {
+    0% {
+        transform: translateY(0);
+    }
+
+    100% {
+        transform: translateY(-10px);
+    }
+}
+
+/* GROUND */
+.ground {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 80px;
+    background: #2e8b57;
 }
